@@ -948,6 +948,10 @@ def create_timezone(
     easy solution, we'd really need to ship another version of the OLSON DB.
 
     """
+    import zoneinfo
+    if isinstance(tz, zoneinfo.ZoneInfo):
+        tz = pytz.timezone(tz.key)
+
     if isinstance(tz, StaticTzInfo):
         return _create_timezone_static(tz)
 
