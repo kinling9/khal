@@ -240,6 +240,10 @@ def expand(
     expand = not bool(vevent.get('RECURRENCE-ID'))
 
     events_tz = getattr(vevent['DTSTART'].dt, 'tzinfo', None)
+    import zoneinfo
+    if isinstance(events_tz, zoneinfo.ZoneInfo):
+        events_tz = pytz.timezone(events_tz.key)
+
     allday = not isinstance(vevent['DTSTART'].dt, dt.datetime)
 
     def sanitize_datetime(date: dt.date) -> dt.date:
